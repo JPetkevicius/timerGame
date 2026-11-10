@@ -11,9 +11,9 @@ export default function TimerChallenge({ title, targetTime }) {
   const timerIsActive = timeRemaining > 0 && timeRemaining < targetTime * 1000;
 
   if (timeRemaining <= 0) {
-    clearInterval(timer.current.current);
+    clearInterval(timer.current);
     setTimeRemaining(targetTime * 1000);
-    dialog.current.open()
+    modal.current.open()
   }
 
   const handleStart = () => {
@@ -23,8 +23,9 @@ export default function TimerChallenge({ title, targetTime }) {
   };
 
   const handleStop = () => {
-    dialog.current.open();
     clearInterval(timer.current);
+    setTimeRemaining(targetTime * 1000);
+    modal.current.open();
   };
 
   return (
