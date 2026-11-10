@@ -3,7 +3,8 @@ import { useRef, useState } from "react";
 import ResultModal from "./ResultModal";
 
 export default function TimerChallenge({ title, targetTime }) {
-const timer = useRef;
+const timer = useRef();
+const modal = useRef();
 
   const [timerStarted, setTimerStarted] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);
@@ -13,16 +14,19 @@ const timer = useRef;
     timer.current = setTimeout(() => {
       setTimerExpired(true);
       setTimerStarted(false);
+      modal.current.open();
     }, targetTime * 1000);
   };
 
   const handleStop = () => {
     clearTimeout(timer.current);
+    setTimerStarted(false);
+    modal.current.showModal();
   }
 
   return (
     <>
-    {timerExpired && <ResultModal targetTime={targetTime} result="lost"/>}
+    <ResultModal ref={modal} targetTime={targetTime} result="lost"/>
     <section className="challenge">
       <h2>{title}</h2>
       <p className="challenge-time">
